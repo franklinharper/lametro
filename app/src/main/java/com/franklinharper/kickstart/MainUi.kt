@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franklinharper.kickstart.recyclerview.DividerItemDecoration
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
-import com.franklinharper.kickstart.recyclerview.adapter.SearchAdapter
+import com.franklinharper.kickstart.recyclerview.adapter.Adapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.lang.IllegalStateException
 
 interface MainUi {
     fun onCreate(mainPresenter: MainPresenter)
@@ -29,7 +28,7 @@ class MainUiImpl(
 ) : MainUi {
 
     private lateinit var presenter: MainPresenter
-    private val searchAdapter = SearchAdapter(activity)
+    private val searchAdapter = Adapter(activity)
 
     // TODO remove calls to findViewById, and replace with kotlinx.android.synthetic.
     private val searchResultsList = activity.findViewById<RecyclerView>(R.id.searchResultsList)
@@ -93,10 +92,9 @@ class MainUiImpl(
         MaterialAlertDialogBuilder(activity)
             .setTitle("Enter valid US zip code")
             .setView(view)
-            .setPositiveButton(
-                android.R.string.ok,
-                { dialogInterface, which -> presenter.searchByZipcode(categoryEditText.text.toString()) }
-            )
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                presenter.searchByZipcode(categoryEditText.text.toString())
+            }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }

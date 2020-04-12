@@ -6,10 +6,13 @@ import android.location.Location
 import androidx.annotation.VisibleForTesting
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.google.android.gms.location.FusedLocationProviderClient
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.net.UnknownHostException
+import java.time.LocalDateTime
+import java.util.concurrent.TimeUnit
 
 enum class LocationOption {
     CURRENT_LOCATION, ENTER_LOCATION, REMOVE_LOCATION
@@ -102,25 +105,27 @@ class MainPresenterImpl(
     private fun search() {
         ui.showResults(emptyList())
         ui.showLoading(true)
-        val coords =
-            if (location == null) null else "${location!!.latitude},${location!!.longitude}"
-        compositeDisposable += laMetroApi
-            .getVehicles("lametro-rail")
+        compositeDisposable += Observable.interval(0,10, TimeUnit.SECONDS)
+            .flatMap {
+                laMetroApi.getVehicles("lametro-rail")
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { vehicles ->
                     ui.showLoading(false)
-                    val newItems = mutableListOf<RecyclerViewItem>()
+                    val newItems = mutableListOf<RecyclerViewItem>(
+                        RecyclerViewItem.UpdateTimeItem(LocalDateTime.now())
+                    )
                     vehicles.vehicles.forEach { vehicle ->
-                        newItems.add(RecyclerViewItem.SearchResult(vehicle))
+                        newItems.add(RecyclerViewItem.VehicleItem(vehicle))
                     }
                     ui.showResults(newItems)
                 }, { throwable ->
                     ui.showLoading(false)
                     when (throwable) {
                         is UnknownHostException -> {
-                            ui.showError(RecyclerViewItem.Error("Unable to connect to server"))
+                            ui.showError(RecyclerViewItem.ErrorItem("Unable to connect to server"))
                         }
                         // Crash to know about bugs ASAP
                         // TODO productionize crash handling (e.g. use Crashlytics)
@@ -138,7 +143,7 @@ class MainPresenterImpl(
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location ->
                         if (location == null) {
-                            ui.showError(RecyclerViewItem.Error("Unable to retrieve current location"))
+                            ui.showError(RecyclerViewItem.ErrorItem("Unable to retrieve current location"))
                         } else {
                             searchByLocation(location)
                         }

@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.franklinharper.kickstart.recyclerview.adapter.SearchAdapter
+import com.franklinharper.kickstart.recyclerview.adapter.Adapter
 
 abstract class BaseSearchResultViewHolder(
   @LayoutRes layout: Int,
   parent: ViewGroup,
-  val adapter: SearchAdapter
+  val adapter: Adapter
 ) : RecyclerView.ViewHolder(LayoutInflater.from(adapter.context).inflate(layout, parent, false)) {
 
   /**

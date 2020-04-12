@@ -5,15 +5,17 @@ import android.widget.TextView
 import com.franklinharper.kickstart.R
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.recyclerview.adapter.Adapter
-import kotlinx.android.synthetic.main.item_vehicle.view.*
+import kotlinx.android.synthetic.main.item_update_time.view.*
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
-class VehicleViewHolder(
+class UpdateTimeViewHolder(
     parent: ViewGroup,
     adapter: Adapter
-) : BaseSearchResultViewHolder(R.layout.item_vehicle, parent, adapter) {
+) : BaseSearchResultViewHolder(R.layout.item_update_time, parent, adapter) {
 
-    private val vehicleId: TextView = itemView.vehicleId
-    private val location: TextView = itemView.location
+    private val updateTime: TextView = itemView.updateTime
+    private val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
 
     init {
 //    itemView.onClick {
@@ -24,11 +26,8 @@ class VehicleViewHolder(
     }
 
     override fun bind(position: Int) {
-        val item = adapter.getItem(position) as RecyclerViewItem.VehicleItem
-        with(item.vehicle) {
-            vehicleId.text = id
-            location.text = "$latitude, $longitude"
-        }
+        val item = adapter.getItem(position) as RecyclerViewItem.UpdateTimeItem
+        updateTime.text = item.dateTime.format(formatter)
     }
 
 }

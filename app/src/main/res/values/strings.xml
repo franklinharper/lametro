@@ -9,4 +9,5 @@
     <string name="permission_rationale_read_contacts">We\'ll use this permission to auto-complete email addresses.</string>
     <string name="vehicleId">Vehicle ID: </string>
     <string name="current_location_lat_long">Current lat, long: </string>
+    <string name="last_update">Updated On</string>
 </resources>

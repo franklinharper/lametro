@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/updateTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_update"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/updateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/updateTimeLabel"
+        android:layout_toEndOf="@id/updateTimeLabel"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@android:color/holo_green_dark"
+        android:textIsSelectable="true"
+        android:textStyle="bold" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
