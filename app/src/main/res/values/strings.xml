@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">LA Metro Vehicles Realtime Location</string>
+    <string name="title_agencies">Agencies</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="retry">Retry</string>
+    <string name="set_location">Set Location</string>
+    <string name="permission_rationale_location">We\'ll use this permission to auto-fill your location.</string>
+    <string name="permission_rationale_read_contacts">We\'ll use this permission to auto-complete email addresses.</string>
+    <string name="vehicleId">Vehicle ID: </string>
+    <string name="current_location_lat_long">Current lat, long: </string>
+</resources>

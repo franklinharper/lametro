@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="caption_text" parent="@style/TextAppearance.MaterialComponents.Caption"/>
+
+    <!-- Body1 is larger text than Body2 -->
+    <style name="body1_text" parent="@style/TextAppearance.MaterialComponents.Body1"/>
+    <style name="body2_text" parent="@style/TextAppearance.MaterialComponents.Body2"/>
+
+    <!-- Headline1 is the largest text, and Headline6 is the smallest -->
+    <style name="headline5_text" parent="@style/TextAppearance.MaterialComponents.Headline5"/>
+    <style name="headline6_text" parent="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+    <!-- Subtitle1 is larger text than Subtitle2 -->
+    <style name="subtitle1_text" parent="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+    <style name="subtitle2_text" parent="@style/TextAppearance.MaterialComponents.Subtitle2"/>
+
+</resources>

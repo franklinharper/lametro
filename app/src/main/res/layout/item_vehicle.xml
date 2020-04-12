@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/vehicleIdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/body2_text"
+        android:text="@string/vehicleId"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/vehicleId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/vehicleIdLabel"
+        android:textAppearance="@style/body1_text"
+        android:layout_alignBaseline="@id/vehicleIdLabel"
+        android:textStyle="bold"
+        android:textIsSelectable="true" />
+
+
+    <TextView
+        android:id="@+id/locationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/body2_text"
+        android:layout_below="@id/vehicleIdLabel"
+        android:text="@string/current_location_lat_long"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/locationLabel"
+        android:textAppearance="@style/body1_text"
+        android:layout_alignBaseline="@id/locationLabel"
+        android:textStyle="bold"
+        android:textIsSelectable="true" />
+
+</RelativeLayout>

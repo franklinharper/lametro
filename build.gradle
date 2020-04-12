@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.3.71'
+    repositories {
+        google()
+        mavenCentral()
+        // JCenter and Bintray are less trustworthy artifact hosts.
+        // Ideally we would NOT download any artifacts from them!
+        // For more details see: https://blog.autsoft.hu/a-confusing-dependency/
+        //
+        // Unfortunately JCenter is the only place where the required trove4j artifact is hosted :(
+        //     org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar
+        //
+         jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.squareup.sqldelight:gradle-plugin:1.1.3'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        // JCenter and Bintray are not trustworthy artifact hosts.
+        // Ideally we would NOT download any artifacts from them!
+        // For more details see: https://blog.autsoft.hu/a-confusing-dependency/
+        // jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
