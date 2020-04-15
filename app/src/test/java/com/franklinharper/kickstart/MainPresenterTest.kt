@@ -1,15 +1,12 @@
 package com.franklinharper.kickstart
 
-import PermissionManager
 import android.content.Intent
 import android.location.Location
-import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.google.android.gms.location.FusedLocationProviderClient
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifySequence
-import io.reactivex.Single
 import org.junit.Rule
 import org.junit.Test
 

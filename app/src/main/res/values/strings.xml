@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LA Metro Vehicles Realtime Location</string>
+    <string name="app_name">LA Metro Locations</string>
     <string name="title_agencies">Agencies</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -10,4 +10,7 @@
     <string name="vehicleId">Vehicle ID: </string>
     <string name="current_location_lat_long">Current lat, long: </string>
     <string name="last_update">Updated On</string>
+    <string name="about_text">Copyright 2020, Frank Harper</string>
+    <string name="title_about">About</string>
+    <string name="about">About</string>
 </resources>

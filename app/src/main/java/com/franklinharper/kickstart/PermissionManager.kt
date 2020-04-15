@@ -1,16 +1,15 @@
-import android.app.Activity
+package com.franklinharper.kickstart
+
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import com.franklinharper.kickstart.Permission
-import com.franklinharper.kickstart.PermissionListener
-import com.franklinharper.kickstart.PermissionStatus
+import androidx.fragment.app.FragmentActivity
 
 class PermissionManager(
-  private val activity: Activity
+  private val activity: FragmentActivity
 ) {
 
   @get:VisibleForTesting
@@ -142,7 +141,7 @@ class PermissionManager(
    */
   @VisibleForTesting
   internal fun systemCheckSelfPermission(permission: Permission): Int {
-    return ActivityCompat.checkSelfPermission(activity, permission.permission)
+    return ActivityCompat.checkSelfPermission(this.activity, permission.permission)
   }
 
   /**
