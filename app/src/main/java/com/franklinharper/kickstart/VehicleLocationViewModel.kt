@@ -4,23 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
+import com.nytimes.android.external.store3.base.impl.Store
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.net.UnknownHostException
 import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-interface VehicleLocationViewModel  {
+interface VehicleLocationViewModel {
   val searchResults: LiveData<List<RecyclerViewItem>>
   val loading: LiveData<Boolean>
   fun startLocationQuery()
 }
 
 class VehicleLocationViewModelImpl @Inject constructor(
-  private val laMetroApi: LaMetroApi
+  private val vehicleLocationStore: Store<Vehicles, String>
 ) : VehicleLocationViewModel, ViewModel() {
 
   override val searchResults = MutableLiveData<List<RecyclerViewItem>>()
@@ -32,8 +36,10 @@ class VehicleLocationViewModelImpl @Inject constructor(
     searchResults.value = emptyList()
     loading.value = true
     compositeDisposable += Observable.interval(0, 10, TimeUnit.SECONDS)
-      .flatMap {
-        laMetroApi.getVehicles("lametro-rail")
+      .flatMapSingle {
+        val utc = OffsetDateTime.now(ZoneOffset.UTC);
+        val key = DateTimeFormatter.ISO_DATE_TIME.format(utc)
+        vehicleLocationStore.get(key)
       }
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())

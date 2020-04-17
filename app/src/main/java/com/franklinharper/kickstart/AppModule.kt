@@ -1,5 +1,8 @@
 package com.franklinharper.kickstart
 
+import com.nytimes.android.external.store3.base.Fetcher
+import com.nytimes.android.external.store3.base.impl.FluentStoreBuilder
+import com.nytimes.android.external.store3.base.impl.Store
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -14,8 +17,19 @@ class AppModule {
 
   @Provides
   @Singleton
-  fun provideVehicleLocationViewModel(laMetroApi: LaMetroApi): VehicleLocationViewModel {
-    return VehicleLocationViewModelImpl(laMetroApi)
+  fun provideVehicleLocationViewModel(store: Store<Vehicles, String>): VehicleLocationViewModel {
+    return VehicleLocationViewModelImpl(store)
+  }
+
+  @Provides
+  @Singleton
+  fun provideVehicleLocationStore(laMetroApi: LaMetroApi): Store<Vehicles, String> {
+    return FluentStoreBuilder.key(
+      fetcher = Fetcher<Vehicles, String> { key ->
+        // Ignore the key because we always want the latest data
+        laMetroApi.getVehicles("lametro-rail")
+      }
+    )
   }
 
   @Provides
@@ -27,7 +41,7 @@ class AppModule {
     val clientBuilder = OkHttpClient.Builder().also {
       it.addInterceptor(loggingInterceptor)
     }
-    val retrofit= Retrofit.Builder()
+    val retrofit = Retrofit.Builder()
       .baseUrl("https://api.metro.net/")
       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
       .client(clientBuilder.build())

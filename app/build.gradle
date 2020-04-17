@@ -51,9 +51,19 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
-    // Data repository (manages both local and remote data sources
-    // TODO migrate to Store4, and replace rxJava by coroutines
+    // TODO migrate to Store version 4 when it is stable
+    // Android Library for Async Data Loading and Caching (local and remote)
+    // Android implementation of the Repository pattern
+    // For details see:
+    //
+    //     Repository pattern https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff649690(v=pandp.10)?redirectedfrom=MSDN
+    //
+    // Documentation:
+    //
+    //     https://github.com/NYTimes/Store
+    //
     implementation 'com.nytimes.android:store3:3.1.1'
+    implementation 'com.nytimes.android:store-kotlin3:3.1.1'
 
     // REST API
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
