@@ -2,39 +2,35 @@ package com.franklinharper.kickstart
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.franklinharper.kickstart.databinding.ActivityMainBinding
+import com.franklinharper.kickstart.databinding.MainActivityBinding
 
 class MainActivity : BaseActivity() {
 
-  private lateinit var appBarConfiguration: AppBarConfiguration
+  private lateinit var binding: MainActivityBinding
+  private val navController: NavController by lazy {
+    Navigation.findNavController(this, R.id.mainNavHostFragment)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
-      this,
-      R.layout.activity_main
-    )
-    val drawerLayout = binding.drawerLayout
-    val navController = findNavController(R.id.mainNavHostFragment)
-    NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-    appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-    NavigationUI.setupWithNavController(binding.navView, navController)
-//    binding.bottomNav.setupWithNavController(navController)
+    binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+    configureNavigation()
   }
 
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        permissionManager.onRequestPermissionsResult(requestCode, grantResults)
-//    }
+  private fun configureNavigation() {
+    NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
+    NavigationUI.setupWithNavController(binding.bottomNav, navController)
+  }
 
   override fun onSupportNavigateUp(): Boolean {
-    val navController = this.findNavController(R.id.mainNavHostFragment)
+    val appBarConfiguration = AppBarConfiguration(
+      navController.graph,
+      binding.drawerLayout
+    )
     return NavigationUI.navigateUp(navController, appBarConfiguration)
   }
 }

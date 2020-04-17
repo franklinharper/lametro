@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_list" />
 
     <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.franklinharper.kickstart.MapFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/map_fragment" />
+
+    <fragment
         android:id="@+id/aboutFragment"
         android:name="com.franklinharper.kickstart.AboutFragment"
         android:label="@string/title_about"
