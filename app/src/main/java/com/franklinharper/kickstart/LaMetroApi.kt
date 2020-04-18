@@ -6,5 +6,5 @@ import retrofit2.http.Path
 
 interface LaMetroApi {
   @GET("agencies/{agency}/vehicles/")
-  fun getVehicles(@Path("agency") agencyId: String): Single<Vehicles>
+  fun getVehicleLocations(@Path("agency") agencyId: String): Single<VehicleLocations>
 }

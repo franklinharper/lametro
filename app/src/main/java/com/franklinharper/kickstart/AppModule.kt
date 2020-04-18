@@ -24,7 +24,7 @@ class AppModule(
   @Provides
   @Singleton
   fun provideVehicleLocationViewModel(
-    store: Store<Vehicles, String>,
+    store: Store<VehicleLocations, String>,
     localDb: LocalDb
   ): VehicleLocationViewModel {
     return VehicleLocationViewModelImpl(store, localDb)
@@ -32,11 +32,11 @@ class AppModule(
 
   @Provides
   @Singleton
-  fun provideVehicleLocationStore(laMetroApi: LaMetroApi): Store<Vehicles, String> {
+  fun provideVehicleLocationStore(laMetroApi: LaMetroApi): Store<VehicleLocations, String> {
     return FluentStoreBuilder.key(
-      fetcher = Fetcher<Vehicles, String> { key ->
+      fetcher = Fetcher<VehicleLocations, String> { key ->
         // Ignore the key because we always want the latest data
-        laMetroApi.getVehicles("lametro-rail")
+        laMetroApi.getVehicleLocations("lametro-rail")
       }
     )
   }

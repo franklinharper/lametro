@@ -3,4 +3,8 @@
     <color name="colorPrimary">@android:color/holo_green_dark</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="gold">#CFBC16</color>
+    <color name="purple">#673AB7</color>
+    <color name="dark_blue">#2196F3</color>
+    <color name="light_blue">#4DA5EC</color>
 </resources>

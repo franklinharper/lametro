@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LA Metro Vehicles</string>
+    <string name="app_name">LA Realtime Train Locations</string>
     <string name="listTitle">List</string>
     <string name="mapTitle">Map</string>
     <string name="retry">Retry</string>

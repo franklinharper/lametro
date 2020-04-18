@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franklinharper.kickstart.databinding.FragmentListBinding
 import com.franklinharper.kickstart.recyclerview.DividerItemDecoration
+import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.recyclerview.adapter.Adapter
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class ListFragment : Fragment() {
@@ -28,13 +30,13 @@ class ListFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+    App.appComponent.inject(this)
     binding = DataBindingUtil.inflate(
       inflater,
       R.layout.fragment_list,
       container,
       false
     )
-    App.appComponent.inject(this)
     configureRecyclerView()
     observeUi()
     observeModel()
@@ -49,12 +51,31 @@ class ListFragment : Fragment() {
   }
 
   private fun observeModel() {
-    model.searchResults.observe(viewLifecycleOwner, Observer { newItems ->
-      searchAdapter.setItems(newItems)
+    model.vehicleLocations.observe(viewLifecycleOwner, Observer { vehicleLocations ->
+      when(vehicleLocations) {
+        null -> showError()
+        else -> showVehicles(vehicleLocations)
+      }
     })
     model.loading.observe(viewLifecycleOwner, Observer { loading ->
       binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
     })
+  }
+
+  private fun showVehicles(vehicles: VehicleLocations) {
+    val newItems = mutableListOf<RecyclerViewItem>(
+      RecyclerViewItem.UpdateTimeItem(LocalDateTime.now())
+    )
+    vehicles.vehicles.forEach { vehicle ->
+      newItems.add(RecyclerViewItem.VehicleItem(vehicle))
+    }
+    searchAdapter.setItems(newItems)
+  }
+
+  private fun showError() {
+    searchAdapter.setItems(listOf(
+        RecyclerViewItem.ErrorItem("Vehicle locations unavailable")
+      ))
   }
 
   private fun configureRecyclerView() {
