@@ -6,16 +6,13 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.franklinharper.kickstart.recyclerview.adapter.Adapter
 
-abstract class BaseSearchResultViewHolder(
+abstract class BaseViewHolder(
   @LayoutRes layout: Int,
   parent: ViewGroup,
   val adapter: Adapter
-) : RecyclerView.ViewHolder(LayoutInflater.from(adapter.context).inflate(layout, parent, false)) {
+) : RecyclerView.ViewHolder(
+  LayoutInflater.from(adapter.context).inflate(layout, parent, false)
+) {
 
-  /**
-   * Base abstract bind for all view models
-   *
-   * @param position Index of items
-   */
   abstract fun bind(position: Int)
 }

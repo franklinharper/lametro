@@ -10,9 +10,9 @@ import kotlinx.android.synthetic.main.item_vehicle.view.*
 class VehicleViewHolder(
     parent: ViewGroup,
     adapter: Adapter
-) : BaseSearchResultViewHolder(R.layout.item_vehicle, parent, adapter) {
+) : BaseViewHolder(R.layout.item_vehicle, parent, adapter) {
 
-    private val vehicleId: TextView = itemView.vehicleId
+    private val vehicle: TextView = itemView.vehicleId
     private val location: TextView = itemView.location
 
     init {
@@ -26,7 +26,7 @@ class VehicleViewHolder(
     override fun bind(position: Int) {
         val item = adapter.getItem(position) as RecyclerViewItem.VehicleItem
         with(item.vehicle) {
-            vehicleId.text = id
+            vehicle.text = vehicleId
             location.text = "$latitude, $longitude"
         }
     }

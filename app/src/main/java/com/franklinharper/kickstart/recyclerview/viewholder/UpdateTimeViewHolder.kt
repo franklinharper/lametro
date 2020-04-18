@@ -12,7 +12,7 @@ import java.time.format.FormatStyle
 class UpdateTimeViewHolder(
     parent: ViewGroup,
     adapter: Adapter
-) : BaseSearchResultViewHolder(R.layout.item_update_time, parent, adapter) {
+) : BaseViewHolder(R.layout.item_update_time, parent, adapter) {
 
     private val updateTime: TextView = itemView.updateTime
     private val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)

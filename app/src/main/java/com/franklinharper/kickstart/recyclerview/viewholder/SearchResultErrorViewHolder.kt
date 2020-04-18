@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_search_error.view.*
 class SearchResultErrorViewHolder(
   parent: ViewGroup,
   adapter: Adapter
-) : BaseSearchResultViewHolder(R.layout.item_search_error, parent, adapter) {
+) : BaseViewHolder(R.layout.item_search_error, parent, adapter) {
 
   private val message: TextView = itemView.searchErrorMessage
 

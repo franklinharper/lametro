@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.recyclerview.ViewType
-import com.franklinharper.kickstart.recyclerview.viewholder.BaseSearchResultViewHolder
+import com.franklinharper.kickstart.recyclerview.viewholder.BaseViewHolder
 import com.franklinharper.kickstart.recyclerview.viewholder.SearchResultErrorViewHolder
 import com.franklinharper.kickstart.recyclerview.viewholder.UpdateTimeViewHolder
 import com.franklinharper.kickstart.recyclerview.viewholder.VehicleViewHolder
 
 
-class Adapter(val context: Context) : RecyclerView.Adapter<BaseSearchResultViewHolder>() {
+class Adapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     private val items = mutableListOf<RecyclerViewItem>()
     private lateinit var retryClickListener:() -> Unit
@@ -21,7 +21,7 @@ class Adapter(val context: Context) : RecyclerView.Adapter<BaseSearchResultViewH
     override fun getItemViewType(position: Int) = items[position].type.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            : BaseSearchResultViewHolder {
+            : BaseViewHolder {
         val type: ViewType = ViewType.values()[viewType]
         return when (type) {
             ViewType.UPDATE_TIME -> UpdateTimeViewHolder(parent, this)
@@ -30,7 +30,7 @@ class Adapter(val context: Context) : RecyclerView.Adapter<BaseSearchResultViewH
         }
     }
 
-    override fun onBindViewHolder(holder: BaseSearchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.bind(position)
     }
 

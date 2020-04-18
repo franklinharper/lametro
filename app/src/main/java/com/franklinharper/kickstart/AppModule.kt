@@ -13,12 +13,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+class AppModule(
+  private val app: App
+) {
 
   @Provides
   @Singleton
-  fun provideVehicleLocationViewModel(store: Store<Vehicles, String>): VehicleLocationViewModel {
-    return VehicleLocationViewModelImpl(store)
+  fun provideApp() = app
+
+  @Provides
+  @Singleton
+  fun provideVehicleLocationViewModel(
+    store: Store<Vehicles, String>,
+    localDb: LocalDb
+  ): VehicleLocationViewModel {
+    return VehicleLocationViewModelImpl(store, localDb)
   }
 
   @Provides
@@ -31,6 +40,10 @@ class AppModule {
       }
     )
   }
+
+  @Provides
+  @Singleton
+  fun provideLocalDb(app: App) = LocalDb(app)
 
   @Provides
   @Singleton

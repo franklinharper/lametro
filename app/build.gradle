@@ -62,10 +62,10 @@ dependencies {
     //
     //     https://github.com/NYTimes/Store
     //
-    implementation 'com.nytimes.android:store3:3.1.1'
-    implementation 'com.nytimes.android:store-kotlin3:3.1.1'
+    implementation "com.nytimes.android:store3:$storeVersion"
+    implementation "com.nytimes.android:store-kotlin3:$storeVersion"
 
-    // REST API
+    // REST API (Retrofit)
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
@@ -73,8 +73,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 
     // Database
-    implementation "com.squareup.sqldelight:android-driver:1.1.3"
-    implementation "com.squareup.sqldelight:rxjava2-extensions:1.1.3"
+    implementation "com.squareup.sqldelight:android-driver:$sqlDelightVersion"
+    implementation "com.squareup.sqldelight:rxjava2-extensions:$sqlDelightVersion"
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'

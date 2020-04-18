@@ -1,0 +1,45 @@
+import com.franklinharper.kickstart.Timestamp;
+
+CREATE TABLE vehicleLocation (
+  id INTEGER PRIMARY KEY,
+  vehicleId TEXT NOT NULL,
+  routeId TEXT NOT NULL,
+  runId TEXT NOT NULL,
+  latitude TEXT NOT NULL,
+  longitude TEXT NOT NULL,
+  heading TEXT NOT NULL,
+  secondsSinceReport TEXT NOT NULL,
+--  predictable INTEGER NOT NULL CHECK (predictable IN (0,1)),
+  predictable TEXT NOT NULL,
+  time INTEGER AS Timestamp NOT NULL
+  -- "time" is The unix Epoch timestamp. See https://en.wikipedia.org/wiki/Unix_time
+  --- timestamp is NOT used to ensure a strict ordering, the "id" is used for that purpose.
+  --
+  -- In certain edge-cases timestamp values may not monotonically increase
+  --
+  -- For example:
+  --   * the system admin changes the system clock
+  --   * there is a configuration error
+  --
+  -- These edge-cases can safely be ignored because they would NOT affect the ordering,
+  -- which is ensured by the "id".
+);
+
+-- selectAll:
+--    SELECT *
+--    FROM vehicleLocation;
+
+insert:
+-- The primary key value "id" is set automatically by SQLite
+INSERT INTO vehicleLocation(
+    vehicleId,
+    routeId,
+    runId,
+    latitude,
+    longitude,
+    heading,
+    secondsSinceReport,
+    predictable,
+    time
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);

@@ -13,6 +13,7 @@ import java.net.UnknownHostException
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -24,7 +25,8 @@ interface VehicleLocationViewModel {
 }
 
 class VehicleLocationViewModelImpl @Inject constructor(
-  private val vehicleLocationStore: Store<Vehicles, String>
+  private val vehicleLocationStore: Store<Vehicles, String>,
+  private val localDb: LocalDb
 ) : VehicleLocationViewModel, ViewModel() {
 
   override val searchResults = MutableLiveData<List<RecyclerViewItem>>()
@@ -45,6 +47,7 @@ class VehicleLocationViewModelImpl @Inject constructor(
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(
         { vehicles ->
+          saveToLocalDb(vehicles)
           loading.value = false
           val newItems = mutableListOf<RecyclerViewItem>(
             RecyclerViewItem.UpdateTimeItem(LocalDateTime.now())
@@ -67,6 +70,29 @@ class VehicleLocationViewModelImpl @Inject constructor(
           }
         }
       )
+  }
+
+  private fun saveToLocalDb(vehicles: Vehicles) {
+    val timeStamp = Timestamp.from(ZonedDateTime.now())
+    with(localDb) {
+      transaction {
+        vehicles.vehicles.forEach { vehicle ->
+          with(vehicle) {
+            localDb.queries.insert(
+             vehicleId,
+              routeId,
+              runId,
+              latitude,
+              longitude,
+              heading,
+              secondsSinceReport,
+              predictable,
+              timeStamp
+            )
+          }
+        }
+      }
+    }
   }
 
 }

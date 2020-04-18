@@ -7,8 +7,8 @@ data class Vehicles(
 )
 
 data class Vehicle(
-    // Prevent bugs caused by renaming properties by always setting the SerializedName explicitly
-    @SerializedName("id") val id: String,
+    // Always set the SerializedName explicitly, this prevents bugs caused when renaming properties
+    @SerializedName("id") val vehicleId: String,
     @SerializedName("route_id") val routeId: String,
     @SerializedName("run_id") val runId: String,
     @SerializedName("latitude") val latitude: String,
