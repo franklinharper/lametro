@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.franklinharper.kickstart.databinding.FragmentListBinding
+import com.franklinharper.kickstart.databinding.ListFragmentBinding
 import com.franklinharper.kickstart.recyclerview.DividerItemDecoration
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.recyclerview.adapter.Adapter
@@ -22,7 +22,7 @@ class ListFragment : Fragment() {
   @Inject
   lateinit var model: VehicleLocationViewModel
 
-  private lateinit var binding: FragmentListBinding
+  private lateinit var binding: ListFragmentBinding
   private val searchAdapter: Adapter by lazy { Adapter((requireActivity().baseContext)) }
 
   override fun onCreateView(
@@ -33,7 +33,7 @@ class ListFragment : Fragment() {
     App.appComponent.inject(this)
     binding = DataBindingUtil.inflate(
       inflater,
-      R.layout.fragment_list,
+      R.layout.list_fragment,
       container,
       false
     )
