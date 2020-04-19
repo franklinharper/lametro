@@ -1,36 +1,41 @@
 package com.franklinharper.kickstart
 
 import android.os.Bundle
+import android.view.MenuInflater
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.franklinharper.kickstart.databinding.MainActivityBinding
 
 class MainActivity : BaseActivity() {
 
   private lateinit var binding: MainActivityBinding
-  private val navController: NavController by lazy {
-    Navigation.findNavController(this, R.id.mainNavHostFragment)
-  }
+  private lateinit var navController: NavController
+  private lateinit var appBarConfiguration: AppBarConfiguration
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
-    configureNavigation()
-  }
-
-  private fun configureNavigation() {
-    NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
+    navController = Navigation.findNavController(this, R.id.mainNavHostFragment)
+    appBarConfiguration = AppBarConfiguration(
+      topLevelDestinationIds = setOf(
+        R.id.listFragment,
+        R.id.mapFragment
+      ),
+      drawerLayout = binding.drawerLayout
+    )
+    NavigationUI.setupActionBarWithNavController(
+      this,
+      navController,
+      appBarConfiguration
+    )
     NavigationUI.setupWithNavController(binding.bottomNav, navController)
   }
 
   override fun onSupportNavigateUp(): Boolean {
-    val appBarConfiguration = AppBarConfiguration(
-      navController.graph,
-      binding.drawerLayout
-    )
     return NavigationUI.navigateUp(navController, appBarConfiguration)
   }
 }
