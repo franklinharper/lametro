@@ -9,8 +9,12 @@
             android:title="@string/listTitle"/>
 
     <item
-            android:id="@+id/mapFragment"
+            android:id="@id/mapFragment"
             android:icon="@drawable/ic_location_on_black_24dp"
             android:title="@string/mapTitle"/>
 
+    <item
+        android:id="@id/aboutFragment"
+        android:icon="@drawable/ic_android_black_24dp"
+        android:title="@string/about_title"/>
 </menu>

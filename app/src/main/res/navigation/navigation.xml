@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.franklinharper.kickstart.AboutFragment"
-        android:label="@string/title_about"
+        android:label="@string/about_title"
         tools:layout="@layout/about_fragment" />
 </navigation>

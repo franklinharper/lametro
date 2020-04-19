@@ -23,9 +23,9 @@ class MainActivity : BaseActivity() {
     appBarConfiguration = AppBarConfiguration(
       topLevelDestinationIds = setOf(
         R.id.listFragment,
-        R.id.mapFragment
-      ),
-      drawerLayout = binding.drawerLayout
+        R.id.mapFragment,
+        R.id.aboutFragment
+      )
     )
     NavigationUI.setupActionBarWithNavController(
       this,
