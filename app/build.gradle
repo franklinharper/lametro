@@ -41,6 +41,11 @@ dependencies {
     // Androidx
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation "androidx.navigation:navigation-fragment:$navigation_version"
+    implementation "androidx.navigation:navigation-ui:$navigation_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     // Material Design Components
     implementation 'com.google.android.material:material:1.1.0'
@@ -49,17 +54,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
-    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment:$navigation_version"
-    implementation "androidx.navigation:navigation-ui:$navigation_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-
-    // TODO migrate to Store version 4 when it is stable
-    // Android Library for Async Data Loading and Caching (local and remote)
-    // Android implementation of the Repository pattern
+    // Android Library for Async Data Loading and Caching (Repository pattern)
+    //
     // For details see:
     //
     //     Repository pattern https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff649690(v=pandp.10)?redirectedfrom=MSDN
