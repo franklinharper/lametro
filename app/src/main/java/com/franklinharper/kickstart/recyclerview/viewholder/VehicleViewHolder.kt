@@ -12,8 +12,9 @@ class VehicleViewHolder(
     adapter: Adapter
 ) : BaseViewHolder(R.layout.item_vehicle, parent, adapter) {
 
-    private val vehicle: TextView = itemView.vehicleId
-    private val location: TextView = itemView.location
+    private val idView: TextView = itemView.vehicleId
+    private val locationView: TextView = itemView.location
+    private val headingView: TextView = itemView.heading
 
     init {
 //    itemView.onClick {
@@ -26,8 +27,9 @@ class VehicleViewHolder(
     override fun bind(position: Int) {
         val item = adapter.getItem(position) as RecyclerViewItem.VehicleItem
         with(item.vehicle) {
-            vehicle.text = vehicleId
-            location.text = "$latitude, $longitude"
+            idView.text = vehicleId
+            locationView.text = "$latitude, $longitude"
+            headingView.text = heading.toString()
         }
     }
 

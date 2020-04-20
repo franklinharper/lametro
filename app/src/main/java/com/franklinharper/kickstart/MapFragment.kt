@@ -1,12 +1,12 @@
 package com.franklinharper.kickstart
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -28,6 +28,9 @@ class MapFragment : Fragment() {
   @Inject
   lateinit var model: VehicleLocationViewModel
 
+  @Inject
+  lateinit var applicationContext: App
+
   private lateinit var map: GoogleMap
   private lateinit var binding: MapFragmentBinding
 
@@ -36,20 +39,24 @@ class MapFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    App.appComponent.inject(this)
+    // Only inflate the layout
     binding = DataBindingUtil.inflate(
       inflater,
       R.layout.map_fragment,
       container,
       false
     )
-    configureMapView(savedInstanceState)
     return binding.root
   }
 
-  private fun configureMapView(savedInstanceState: Bundle?) {
-    val mv = binding.mapView
-    with(mv) {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    // Logic that operates on the View goes here
+    App.appComponent.inject(this)
+    setupMapView(savedInstanceState)
+  }
+
+  private fun setupMapView(savedInstanceState: Bundle?) {
+    with(binding.mapView) {
       onCreate(savedInstanceState)
       getMapAsync {
         map = it
@@ -65,14 +72,12 @@ class MapFragment : Fragment() {
   }
 
   private fun observeModel() {
-    model.vehicleLocations.observe(viewLifecycleOwner, Observer { vehicleLocations ->
+    model.vehicleLocationsLiveData.observe(viewLifecycleOwner, Observer { vehicleLocations ->
       when (vehicleLocations) {
         null -> showError()
         else -> showVehicles(vehicleLocations)
       }
     })
-//    model.loading.observe(viewLifecycleOwner, Observer { loading ->
-//    })
   }
 
   private fun showVehicles(vehicleLocations: VehicleLocations) {
@@ -81,9 +86,8 @@ class MapFragment : Fragment() {
       val latLng = LatLng(vehicle.latitude, vehicle.longitude)
       val routeData = routeMap[vehicle.routeId]!!
       val icon = bitmapDescriptorFromVector(
-        requireContext(),
         R.drawable.ic_train,
-        ContextCompat.getColor(requireContext(), routeData.color)
+        ContextCompat.getColor(applicationContext, routeData.color)
       )
       val markerOptions = MarkerOptions()
         .position(latLng)
@@ -94,7 +98,7 @@ class MapFragment : Fragment() {
   }
 
   private fun showError() {
-    TODO("Not yet implemented")
+    Toast.makeText(applicationContext, R.string.error, Toast.LENGTH_SHORT).show()
   }
 
   override fun onStart() {
@@ -133,11 +137,10 @@ class MapFragment : Fragment() {
   }
 
   private fun bitmapDescriptorFromVector(
-    context: Context,
     @DrawableRes vectorResId: Int,
     tint: Int
   ): BitmapDescriptor? {
-    return ContextCompat.getDrawable(context, vectorResId)?.run {
+    return ContextCompat.getDrawable(applicationContext, vectorResId)?.run {
       setTint(tint)
       setBounds(0, 0, intrinsicWidth, intrinsicHeight)
       val bitmap = Bitmap.createBitmap(
@@ -150,16 +153,16 @@ class MapFragment : Fragment() {
     }
   }
 
-  private data class routeData(val displayName: String, @ColorRes val color: Int)
+  private data class RouteData(val displayName: String, @ColorRes val color: Int)
 
   companion object {
     private val routeMap = mapOf(
-      "801" to routeData("Blue Line", R.color.light_blue),
-      "802" to routeData("Red Line", android.R.color.holo_red_dark),
-      "803" to routeData("Green Line", android.R.color.holo_green_dark),
-      "804" to routeData("Gold Line", R.color.gold),
-      "805" to routeData("Purple Line", R.color.purple),
-      "806" to routeData("Expo Line", android.R.color.holo_orange_dark)
+      "801" to RouteData("Blue Line", R.color.light_blue),
+      "802" to RouteData("Red Line", android.R.color.holo_red_dark),
+      "803" to RouteData("Green Line", android.R.color.holo_green_dark),
+      "804" to RouteData("Gold Line", R.color.gold),
+      "805" to RouteData("Purple Line", R.color.purple),
+      "806" to RouteData("Expo Line", android.R.color.holo_orange_dark)
     )
   }
 }

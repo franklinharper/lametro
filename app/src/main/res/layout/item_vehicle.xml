@@ -44,4 +44,24 @@
         android:textStyle="bold"
         android:textIsSelectable="true" />
 
+    <TextView
+        android:id="@+id/headingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/body2_text"
+        android:layout_below="@id/location"
+        android:text="@string/headingLabel"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/headingLabel"
+        android:textAppearance="@style/body1_text"
+        android:layout_alignBaseline="@id/headingLabel"
+        android:textStyle="bold"
+        android:textIsSelectable="true" />
+
 </RelativeLayout>

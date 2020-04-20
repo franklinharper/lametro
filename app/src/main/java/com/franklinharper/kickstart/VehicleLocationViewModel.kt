@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.time.OffsetDateTime
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 interface VehicleLocationViewModel {
-  val vehicleLocations: LiveData<VehicleLocations>
+  val vehicleLocationsLiveData: LiveData<VehicleLocations>
   val loading: LiveData<Boolean>
   fun startLocationQuery()
 }
@@ -28,13 +29,20 @@ class VehicleLocationViewModelImpl @Inject constructor(
   private val localDb: LocalDb
 ) : VehicleLocationViewModel, ViewModel() {
 
-  override val vehicleLocations = MutableLiveData<VehicleLocations>()
+  override val vehicleLocationsLiveData = MutableLiveData<VehicleLocations>()
   override val loading = MutableLiveData<Boolean>()
 
   private val compositeDisposable = CompositeDisposable()
 
+
+  override fun onCleared() {
+    super.onCleared()
+    Timber.i("onCleared() called")
+    compositeDisposable.clear()
+  }
+
   override fun startLocationQuery() {
-    vehicleLocations.value = VehicleLocations()
+    vehicleLocationsLiveData.value = VehicleLocations()
     loading.value = true
     compositeDisposable += Observable.interval(0, 10, TimeUnit.SECONDS)
       .flatMapSingle {
@@ -42,24 +50,34 @@ class VehicleLocationViewModelImpl @Inject constructor(
         val key = DateTimeFormatter.ISO_DATE_TIME.format(utc)
         vehicleLocationStore.get(key)
       }
+      .doOnNext { vehicleLocations ->
+        saveToLocalDb(vehicleLocations)
+      }
+      .map { vehicleLocations ->
+        // The API doesn't return the vehicles in a stable order, so we'll sort it
+        val sorted = vehicleLocations.vehicles.sortedBy { it.vehicleId }
+        vehicleLocations.copy(vehicles = sorted)
+      }
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(
-        { vehicles ->
-          saveToLocalDb(vehicles)
+        { vehicleLocations ->
           loading.value = false
-          vehicleLocations.value = vehicles
+          vehicleLocationsLiveData.value = vehicleLocations
         }, { throwable ->
           loading.value = false
-          when (throwable) {
-            is UnknownHostException,
-            is SocketTimeoutException -> { vehicleLocations.value = null }
-            // Crash to know about bugs ASAP
-            // TODO productionize crash handling (e.g. use Crashlytics)
-            else -> throw throwable
-          }
+          vehicleLocationsLiveData.value = null
+          reportOrThrow(throwable)
         }
       )
+  }
+
+  private fun reportOrThrow(throwable: Throwable) {
+    if (BuildConfig.DEBUG && throwable !is UnknownHostException && throwable !is SocketTimeoutException) {
+      // In dev crash to know about bugs ASAP
+      throw throwable
+    }
+    // TODO report crashes in production (e.g. use Crashlytics)
   }
 
   private fun saveToLocalDb(vehicles: VehicleLocations) {
@@ -69,7 +87,7 @@ class VehicleLocationViewModelImpl @Inject constructor(
         vehicles.vehicles.forEach { vehicle ->
           with(vehicle) {
             localDb.queries.insert(
-             vehicleId,
+              vehicleId,
               routeId,
               runId,
               latitude.toString(),

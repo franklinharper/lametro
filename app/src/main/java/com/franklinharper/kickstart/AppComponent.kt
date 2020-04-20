@@ -8,6 +8,4 @@ import javax.inject.Singleton
 interface AppComponent {
   fun inject(c: ListFragment)
   fun inject(c: MapFragment)
-  fun inject(c: VehicleLocationViewModelImpl)
 }
-

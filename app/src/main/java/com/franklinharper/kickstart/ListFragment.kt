@@ -14,6 +14,7 @@ import com.franklinharper.kickstart.databinding.ListFragmentBinding
 import com.franklinharper.kickstart.recyclerview.DividerItemDecoration
 import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.recyclerview.adapter.Adapter
+import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -30,18 +31,24 @@ class ListFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    App.appComponent.inject(this)
+    // Only inflate the layout
     binding = DataBindingUtil.inflate(
       inflater,
       R.layout.list_fragment,
       container,
       false
     )
+    return binding.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    // Logic that operates on the View goes here
+    App.appComponent.inject(this)
     configureRecyclerView()
     observeUi()
     observeModel()
     model.startLocationQuery()
-    return binding.root
   }
 
   private fun observeUi() {
@@ -51,7 +58,7 @@ class ListFragment : Fragment() {
   }
 
   private fun observeModel() {
-    model.vehicleLocations.observe(viewLifecycleOwner, Observer { vehicleLocations ->
+    model.vehicleLocationsLiveData.observe(viewLifecycleOwner, Observer { vehicleLocations ->
       when(vehicleLocations) {
         null -> showError()
         else -> showVehicles(vehicleLocations)

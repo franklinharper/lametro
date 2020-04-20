@@ -12,4 +12,6 @@
     <string name="about_text">Copyright 2020, Frank Harper</string>
     <string name="about_title">About</string>
     <string name="about">About</string>
+    <string name="error">An error occurred</string>
+    <string name="headingLabel">"Heading: "</string>
 </resources>
