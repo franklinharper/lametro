@@ -1,14 +1,14 @@
-package com.franklinharper.kickstart.recyclerview.adapter
+package com.franklinharper.kickstart.location.list.recyclerview.adapter
 
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
-import com.franklinharper.kickstart.recyclerview.ViewType
-import com.franklinharper.kickstart.recyclerview.viewholder.BaseViewHolder
-import com.franklinharper.kickstart.recyclerview.viewholder.SearchResultErrorViewHolder
-import com.franklinharper.kickstart.recyclerview.viewholder.UpdateTimeViewHolder
-import com.franklinharper.kickstart.recyclerview.viewholder.VehicleViewHolder
+import com.franklinharper.kickstart.location.list.recyclerview.RecyclerViewItem
+import com.franklinharper.kickstart.location.list.recyclerview.ViewType
+import com.franklinharper.kickstart.location.list.recyclerview.viewholder.BaseViewHolder
+import com.franklinharper.kickstart.location.list.recyclerview.viewholder.SearchResultErrorViewHolder
+import com.franklinharper.kickstart.location.list.recyclerview.viewholder.UpdateTimeViewHolder
+import com.franklinharper.kickstart.location.list.recyclerview.viewholder.VehicleViewHolder
 
 
 class Adapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {

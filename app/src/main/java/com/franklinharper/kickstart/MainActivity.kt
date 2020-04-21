@@ -1,14 +1,12 @@
 package com.franklinharper.kickstart
 
 import android.os.Bundle
-import android.view.MenuInflater
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
+import com.franklinharper.kickstart.baseclass.BaseActivity
 import com.franklinharper.kickstart.databinding.MainActivityBinding
 
 class MainActivity : BaseActivity() {

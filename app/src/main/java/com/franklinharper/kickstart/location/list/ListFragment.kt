@@ -1,4 +1,4 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.franklinharper.kickstart.App
+import com.franklinharper.kickstart.R
+import com.franklinharper.kickstart.location.VehicleLocationViewModel
+import com.franklinharper.kickstart.location.VehicleLocations
 import com.franklinharper.kickstart.databinding.ListFragmentBinding
-import com.franklinharper.kickstart.recyclerview.DividerItemDecoration
-import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
-import com.franklinharper.kickstart.recyclerview.adapter.Adapter
-import timber.log.Timber
+import com.franklinharper.kickstart.location.list.recyclerview.DividerItemDecoration
+import com.franklinharper.kickstart.location.list.recyclerview.RecyclerViewItem
+import com.franklinharper.kickstart.location.list.recyclerview.adapter.Adapter
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -48,12 +51,12 @@ class ListFragment : Fragment() {
     configureRecyclerView()
     observeUi()
     observeModel()
-    model.startLocationQuery()
+    model.startVehicleLocationUpdates()
   }
 
   private fun observeUi() {
     searchAdapter.setRetryClickLister {
-      model.startLocationQuery()
+      model.startVehicleLocationUpdates()
     }
   }
 

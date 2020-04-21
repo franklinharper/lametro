@@ -1,4 +1,6 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location.map
+
+import com.franklinharper.kickstart.location.map.Permission
 
 interface PermissionListener {
 

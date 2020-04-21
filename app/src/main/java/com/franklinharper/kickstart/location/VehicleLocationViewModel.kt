@@ -1,12 +1,15 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.franklinharper.kickstart.*
+import com.franklinharper.kickstart.extension.plusAssign
 import com.nytimes.android.external.store3.base.impl.Store
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.net.SocketTimeoutException
@@ -21,7 +24,7 @@ import javax.inject.Inject
 interface VehicleLocationViewModel {
   val vehicleLocationsLiveData: LiveData<VehicleLocations>
   val loading: LiveData<Boolean>
-  fun startLocationQuery()
+  fun startVehicleLocationUpdates()
 }
 
 class VehicleLocationViewModelImpl @Inject constructor(
@@ -31,9 +34,7 @@ class VehicleLocationViewModelImpl @Inject constructor(
 
   override val vehicleLocationsLiveData = MutableLiveData<VehicleLocations>()
   override val loading = MutableLiveData<Boolean>()
-
   private val compositeDisposable = CompositeDisposable()
-
 
   override fun onCleared() {
     super.onCleared()
@@ -41,8 +42,9 @@ class VehicleLocationViewModelImpl @Inject constructor(
     compositeDisposable.clear()
   }
 
-  override fun startLocationQuery() {
-    vehicleLocationsLiveData.value = VehicleLocations()
+  override fun startVehicleLocationUpdates() {
+    vehicleLocationsLiveData.value =
+      VehicleLocations()
     loading.value = true
     compositeDisposable += Observable.interval(0, 10, TimeUnit.SECONDS)
       .flatMapSingle {
@@ -54,7 +56,7 @@ class VehicleLocationViewModelImpl @Inject constructor(
         saveToLocalDb(vehicleLocations)
       }
       .map { vehicleLocations ->
-        // The API doesn't return the vehicles in a stable order, so we'll sort it
+        // The API doesn't return the vehicles in a stable order, so we'll sort the list
         val sorted = vehicleLocations.vehicles.sortedBy { it.vehicleId }
         vehicleLocations.copy(vehicles = sorted)
       }
@@ -81,7 +83,8 @@ class VehicleLocationViewModelImpl @Inject constructor(
   }
 
   private fun saveToLocalDb(vehicles: VehicleLocations) {
-    val timeStamp = Timestamp.from(ZonedDateTime.now())
+    val timeStamp =
+      Timestamp.from(ZonedDateTime.now())
     with(localDb) {
       transaction {
         vehicles.vehicles.forEach { vehicle ->

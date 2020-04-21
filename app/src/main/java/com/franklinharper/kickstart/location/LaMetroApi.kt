@@ -1,5 +1,6 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location
 
+import com.franklinharper.kickstart.location.VehicleLocations
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

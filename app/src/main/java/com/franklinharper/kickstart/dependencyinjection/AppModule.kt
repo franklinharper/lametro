@@ -1,5 +1,7 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.dependencyinjection
 
+import com.franklinharper.kickstart.*
+import com.franklinharper.kickstart.location.*
 import com.nytimes.android.external.store3.base.Fetcher
 import com.nytimes.android.external.store3.base.impl.FluentStoreBuilder
 import com.nytimes.android.external.store3.base.impl.Store
@@ -27,7 +29,10 @@ class AppModule(
     store: Store<VehicleLocations, String>,
     localDb: LocalDb
   ): VehicleLocationViewModel {
-    return VehicleLocationViewModelImpl(store, localDb)
+    return VehicleLocationViewModelImpl(
+      store,
+      localDb
+    )
   }
 
   @Provides
@@ -43,7 +48,8 @@ class AppModule(
 
   @Provides
   @Singleton
-  fun provideLocalDb(app: App) = LocalDb(app)
+  fun provideLocalDb(app: App) =
+    LocalDb(app)
 
   @Provides
   @Singleton

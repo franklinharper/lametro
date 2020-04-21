@@ -1,4 +1,4 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location.map
 
 import android.content.DialogInterface
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-import com.franklinharper.kickstart.Timestamp;
+import com.franklinharper.kickstart.location.Timestamp;
 
 CREATE TABLE vehicleLocation (
   id INTEGER PRIMARY KEY,

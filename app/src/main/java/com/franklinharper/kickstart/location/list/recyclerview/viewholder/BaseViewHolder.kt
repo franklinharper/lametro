@@ -1,10 +1,10 @@
-package com.franklinharper.kickstart.recyclerview.viewholder
+package com.franklinharper.kickstart.location.list.recyclerview.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.franklinharper.kickstart.recyclerview.adapter.Adapter
+import com.franklinharper.kickstart.location.list.recyclerview.adapter.Adapter
 
 abstract class BaseViewHolder(
   @LayoutRes layout: Int,

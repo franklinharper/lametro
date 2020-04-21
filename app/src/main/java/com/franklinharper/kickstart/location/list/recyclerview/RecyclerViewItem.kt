@@ -1,7 +1,7 @@
-package com.franklinharper.kickstart.recyclerview
+package com.franklinharper.kickstart.location.list.recyclerview
 
-import com.franklinharper.kickstart.Vehicle
-import com.franklinharper.kickstart.recyclerview.ViewType.*
+import com.franklinharper.kickstart.location.Vehicle
+import com.franklinharper.kickstart.location.list.recyclerview.ViewType.*
 import java.time.LocalDateTime
 
 enum class ViewType {

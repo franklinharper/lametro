@@ -1,5 +1,7 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.dependencyinjection
 
+import com.franklinharper.kickstart.location.map.MapFragment
+import com.franklinharper.kickstart.location.list.ListFragment
 import dagger.Component
 import javax.inject.Singleton
 

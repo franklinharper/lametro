@@ -1,4 +1,4 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location.map
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -13,6 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.franklinharper.kickstart.App
+import com.franklinharper.kickstart.R
+import com.franklinharper.kickstart.location.VehicleLocationViewModel
+import com.franklinharper.kickstart.location.VehicleLocations
 import com.franklinharper.kickstart.databinding.MapFragmentBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -97,8 +101,28 @@ class MapFragment : Fragment() {
     }
   }
 
+  private fun bitmapDescriptorFromVector(
+    @DrawableRes vectorResId: Int,
+    tint: Int
+  ): BitmapDescriptor? {
+    return ContextCompat.getDrawable(applicationContext, vectorResId)?.run {
+      setTint(tint)
+      setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+      val bitmap = Bitmap.createBitmap(
+        intrinsicWidth,
+        intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+      )
+      draw(Canvas(bitmap))
+      BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+  }
+
   private fun showError() {
-    Toast.makeText(applicationContext, R.string.error, Toast.LENGTH_SHORT).show()
+    Toast.makeText(
+      applicationContext,
+      R.string.error, Toast.LENGTH_SHORT
+    ).show()
   }
 
   override fun onStart() {
@@ -134,23 +158,6 @@ class MapFragment : Fragment() {
   override fun onLowMemory() {
     super.onLowMemory()
     binding.mapView.onLowMemory()
-  }
-
-  private fun bitmapDescriptorFromVector(
-    @DrawableRes vectorResId: Int,
-    tint: Int
-  ): BitmapDescriptor? {
-    return ContextCompat.getDrawable(applicationContext, vectorResId)?.run {
-      setTint(tint)
-      setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-      val bitmap = Bitmap.createBitmap(
-        intrinsicWidth,
-        intrinsicHeight,
-        Bitmap.Config.ARGB_8888
-      )
-      draw(Canvas(bitmap))
-      BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
   }
 
   private data class RouteData(val displayName: String, @ColorRes val color: Int)

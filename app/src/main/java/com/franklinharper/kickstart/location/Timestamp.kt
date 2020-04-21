@@ -1,4 +1,4 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location
 
 import java.time.Instant
 import java.time.ZoneId
@@ -13,7 +13,7 @@ data class Timestamp(val epochSecond: Long) {
 
   companion object {
     fun from(time: ZonedDateTime): Timestamp {
-      return  Timestamp(time.toEpochSecond())
+      return Timestamp(time.toEpochSecond())
     }
   }
 

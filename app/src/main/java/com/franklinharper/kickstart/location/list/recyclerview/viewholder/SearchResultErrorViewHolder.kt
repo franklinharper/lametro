@@ -1,10 +1,10 @@
-package com.franklinharper.kickstart.recyclerview.viewholder
+package com.franklinharper.kickstart.location.list.recyclerview.viewholder
 
 import android.view.ViewGroup
 import android.widget.TextView
 import com.franklinharper.kickstart.R
-import com.franklinharper.kickstart.recyclerview.RecyclerViewItem
-import com.franklinharper.kickstart.recyclerview.adapter.Adapter
+import com.franklinharper.kickstart.location.list.recyclerview.RecyclerViewItem
+import com.franklinharper.kickstart.location.list.recyclerview.adapter.Adapter
 import kotlinx.android.synthetic.main.item_search_error.view.*
 
 class SearchResultErrorViewHolder(

@@ -1,4 +1,4 @@
-package com.franklinharper.kickstart.recyclerview;
+package com.franklinharper.kickstart.location.list.recyclerview;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

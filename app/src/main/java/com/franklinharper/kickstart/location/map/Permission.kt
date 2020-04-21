@@ -1,7 +1,8 @@
-package com.franklinharper.kickstart
+package com.franklinharper.kickstart.location.map
 
 import android.Manifest
 import androidx.annotation.StringRes
+import com.franklinharper.kickstart.R
 
 
 /**

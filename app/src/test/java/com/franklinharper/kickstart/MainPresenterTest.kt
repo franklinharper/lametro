@@ -2,6 +2,10 @@ package com.franklinharper.kickstart
 
 import android.content.Intent
 import android.location.Location
+import com.franklinharper.kickstart.location.LaMetroApi
+import com.franklinharper.kickstart.location.map.Permission
+import com.franklinharper.kickstart.location.map.PermissionManager
+import com.franklinharper.kickstart.location.map.PermissionStatus
 import com.google.android.gms.location.FusedLocationProviderClient
 import io.mockk.every
 import io.mockk.mockk
