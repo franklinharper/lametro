@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.franklinharper.kickstart.App
 import com.franklinharper.kickstart.R
+import com.franklinharper.kickstart.databinding.ListFragmentBinding
 import com.franklinharper.kickstart.location.VehicleLocationViewModel
 import com.franklinharper.kickstart.location.VehicleLocations
-import com.franklinharper.kickstart.databinding.ListFragmentBinding
 import com.franklinharper.kickstart.location.list.recyclerview.DividerItemDecoration
 import com.franklinharper.kickstart.location.list.recyclerview.RecyclerViewItem
 import com.franklinharper.kickstart.location.list.recyclerview.adapter.Adapter
@@ -61,15 +61,15 @@ class ListFragment : Fragment() {
   }
 
   private fun observeModel() {
-    model.vehicleLocationsLiveData.observe(viewLifecycleOwner, Observer { vehicleLocations ->
-      when(vehicleLocations) {
+    model.vehicleLocationsLiveData.observe(viewLifecycleOwner) { vehicleLocations ->
+      when (vehicleLocations) {
         null -> showError()
         else -> showVehicles(vehicleLocations)
       }
-    })
-    model.loading.observe(viewLifecycleOwner, Observer { loading ->
+    }
+    model.loading.observe(viewLifecycleOwner) { loading ->
       binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
-    })
+    }
   }
 
   private fun showVehicles(vehicles: VehicleLocations) {
@@ -83,9 +83,11 @@ class ListFragment : Fragment() {
   }
 
   private fun showError() {
-    searchAdapter.setItems(listOf(
+    searchAdapter.setItems(
+      listOf(
         RecyclerViewItem.ErrorItem("Vehicle locations unavailable")
-      ))
+      )
+    )
   }
 
   private fun configureRecyclerView() {

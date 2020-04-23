@@ -12,12 +12,12 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.franklinharper.kickstart.App
 import com.franklinharper.kickstart.R
+import com.franklinharper.kickstart.databinding.MapFragmentBinding
 import com.franklinharper.kickstart.location.VehicleLocationViewModel
 import com.franklinharper.kickstart.location.VehicleLocations
-import com.franklinharper.kickstart.databinding.MapFragmentBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -25,7 +25,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
-
 
 class MapFragment : Fragment() {
 
@@ -76,12 +75,12 @@ class MapFragment : Fragment() {
   }
 
   private fun observeModel() {
-    model.vehicleLocationsLiveData.observe(viewLifecycleOwner, Observer { vehicleLocations ->
+    model.vehicleLocationsLiveData.observe(viewLifecycleOwner) { vehicleLocations ->
       when (vehicleLocations) {
         null -> showError()
         else -> showVehicles(vehicleLocations)
       }
-    })
+    }
   }
 
   private fun showVehicles(vehicleLocations: VehicleLocations) {
